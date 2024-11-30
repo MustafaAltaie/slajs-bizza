@@ -3,52 +3,52 @@ import { defineProps, defineEmits } from 'vue';
 
 // Props for item and visibility
 const props = defineProps({
-  item: {
+  selectedItem: {
     type: Object,
     required: true,
   },
-  visible: {
+  isModalVisible: {
     type: Boolean,
     required: true,
   },
 });
 
 // Emit close event and add to cart event
-const emit = defineEmits(['close', 'addToCart']);
+const emit = defineEmits(['closeModal', 'handleAddToCart']);
 
 // Close the modal
 const closeModal = () => {
-  emit('close');
+  emit('closeModal');
 };
 
 // Add item to the cart
 const addItemToCart = () => {
-  emit('addToCart', props.item);  // Emit the item to be added to cart
+  emit('handleAddToCart', props.selectedItem);  // Emit the item to be added to cart
 };
 </script>
 
 <template>
-  <div v-if="visible" class="modal">
+  <div v-if="isModalVisible" class="modal">
     <div class="modal-content">
       <!-- Close Button -->
       <button class="close-btn" @click="closeModal" aria-label="Close">X</button>
 
       <!-- Item Details -->
-      <h2 id="modal-title">{{ item?.name || 'No Name Available' }}</h2>
-      <p>{{ item?.description || 'No description available' }}</p>
-      <p><strong>Price:</strong> {{ item?.price || 0 }} SEK</p>
+      <h2 id="modal-title">{{ selectedItem?.name || 'No Name Available' }}</h2>
+      <p>{{ selectedItem?.description || 'No description available' }}</p>
+      <p><strong>Price:</strong> {{ selectedItem?.price || 0 }} SEK</p>
 
       <!-- Ingredients -->
       <h3>Ingredients:</h3>
       <div>
-        <h4 v-for="ingredient in item?.toppings || []" :key="ingredient">
+        <h4 v-for="ingredient in selectedItem?.toppings || []" :key="ingredient">
           {{ ingredient }}
         </h4>
       </div>
 
       <!-- Allergens -->
       <h3>Allergens:</h3>
-      <p>{{ item?.allergens?.join(', ') || 'None' }}</p>
+      <p>{{ selectedItem?.allergens?.join(', ') || 'None' }}</p>
 
       <!-- Add to Cart Button -->
       <button @click="addItemToCart" class="add-to-cart-btn">Add to Cart</button>

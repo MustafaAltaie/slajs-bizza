@@ -43,6 +43,11 @@ const handleAddToCart = (item) => {
   addItemToCart(item);
   closeModal();
 };
+
+const scrollTo = (id) => {
+  const menu = document.getElementById(id);
+  menu.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 
 <template>
@@ -66,10 +71,10 @@ const handleAddToCart = (item) => {
           </li>
         </ul>
         <ProductDetailsModal 
-          :item="selectedItem" 
-          :visible="isModalVisible" 
-          @close="closeModal" 
-          @addToCart="handleAddToCart" 
+          :selectedItem="selectedItem" 
+          :isModalVisible="isModalVisible" 
+          @closeModal="closeModal" 
+          @handleAddToCart="handleAddToCart" 
         />
       </div>
     </div>
@@ -172,6 +177,18 @@ nav > p{
   top: 0;
   right: 0;
   width: 300px;
-  background: #ffffffaa;
+  padding: 10px;
+  background: #fff;
+  text-align: center;
+}
+ol{
+  list-style: none;
+  background: #fff;
+  margin: 20px 0;
+}
+ol > li{
+  padding: 10px;
+  margin: 3px 0;
+  background: #00000011;
 }
 </style>
